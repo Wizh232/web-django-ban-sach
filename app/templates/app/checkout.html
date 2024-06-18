@@ -1,0 +1,59 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content_checkout %}
+     <div class="row" style="width:100%">
+		<div class="col-lg-6">
+			<div class="box-element" id="form-wrapper">
+				<form action="{% url 'shipping_address' %}" method="post">
+					{% csrf_token %}
+					<!-- Các trường thông tin địa chỉ giao hàng -->
+					
+					
+					
+						<h3>Shipping Information:</h3>
+						<hr>
+						<div class="form-field">
+							<input class="form-control" type="text" name="address" placeholder="Địa chỉ" required>
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="city" placeholder="Thành phố"required>
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="state" placeholder="Quận/huyện"required>
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="mobile" placeholder="Số điện thoại"required>
+						</div>
+						<div class="form-field">
+							
+							<br>
+							<input id="form-button" class="btn btn-success btn-block" type="submit" value="Đặt hàng">
+						</div>
+				</form>
+			</div>
+
+			<br>
+			
+			
+		</div>
+
+		<div class="col-lg-6">
+			<div class="box-element">
+				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Quay về giỏ hàng</a>
+				<hr>
+				<h3>Đơn hàng</h3>
+				<hr>
+				{% for item in items %}
+				<div class="cart-row">
+					<div style="flex:2"><img class="row-image" src="{{item.product.ImageURL}}"></div>
+					<div style="flex:2"><p>{{item.product.name}}</p></div>
+					<div style="flex:1"><p>${{item.product.price}}</p></div>
+					<div style="flex:1"><p>{{item.quantity}}</p></div>
+				</div>
+				{% endfor %}
+				<h5>Sản phẩm:   {{order.get_cart_items}}</h5>
+				<h5>Tổng cộng:   {{order.get_cart_total| floatformat:3}} đ</h5>
+			</div>
+		</div>
+	</div>
+{% endblock content_checkout %}
